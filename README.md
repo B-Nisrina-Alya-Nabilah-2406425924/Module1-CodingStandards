@@ -60,3 +60,5 @@ Jika saya membuat kelas baru `CreateProductFunctionalTest.java` dengan prosedur 
 
 2. Apakah implementasi saat ini sudah memenuhi definisi Continuous Integration (CI) dan Continuous Deployment (CD)?
    - Menurut saya, implementasi saat ini sudah memenuhi kriteria CI/CD, hal ini dikarenakan setiap kali ada perubahan kode yang dikirim (push) ke repositori, GitHub Actions secara otomatis menjalankan rangkaian unit test dan analisis kualitas kode (CI) untuk memastikan tidak ada fitur yang rusak, selain itu, proses code delivery ke Platform as a Service (PaaS) seperti Koyeb juga sudah otomatis terpicu begitu kode digabungkan ke branch main, sehingga aplikasi versi terbaru dapat langsung diakses oleh pengguna tanpa intervensi manual (CD).
+
+---
