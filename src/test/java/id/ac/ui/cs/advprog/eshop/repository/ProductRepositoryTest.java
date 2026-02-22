@@ -67,6 +67,19 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void testFindByIdNotFound() {
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(100);
+        productRepository.create(product);
+
+        Product foundProduct = productRepository.findById("id-ngasal-aja-ini");
+
+        assertNull(foundProduct);
+    }
+
+    @Test
     void testEditProductPositive() {
         Product product = new Product();
         product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
