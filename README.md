@@ -44,3 +44,19 @@ Jika saya membuat kelas baru `CreateProductFunctionalTest.java` dengan prosedur 
   * Page for Object Model: Menggunakan pola page object model untuk memisahkan logika interaksi elemen UI dengan logika verifikasi test, sehingga code lebih mudah dibaca.
 
 ---
+
+# TUTORIAL MODUL 2 - CI/CD & DevOps
+
+---
+
+## Refleksi Tutorial 2
+
+1. Daftar masalah kualitas kode yang diperbaiki dan strategi memperbaikinya
+    Selama pengerjaan tutorial dan latihan ini, beberapa masalah kualitas kode yang saya temukan dan perbaiki adalah:
+    - Keamanan Izin Token (Token Permissions): Scorecard Bot mendeteksi bahwa izin ``GITHUB_TOKEN`` terlalu luas, yang ditunjukkan dengan skor 0, Strategi perbaikannya adalah dengan menambahkan blok permissions: `read-all` atau membatasi izin secara spesifik menjadi `contents: read` pada file workflow YAML agar sistem hanya memiliki hak akses minimum yang diperlukan.
+    - Ketidakcocokan Versi Gradle (Gradle Compatibility): Terjadi error `getConvention()` karena penggunaan Gradle 9 yang tidak kompatibel dengan beberapa plugin lama, strategi perbaikannya adalah melakukan downgrade versi Gradle ke 8.10 menggunakan perintah ./gradlew wrapper agar sesuai dengan spesifikasi plugin SonarQube dan Spring Boot.
+    - Security Hotspot: `SonarCloud` mendeteksi ketiadaan verifikasi integritas pada library yang diunduh, strategi perbaikannya adalah menjalankan perintah `--write-verification-metadata` untuk membuat file `verification-metadata.xml` guna memastikan setiap library yang digunakan telah melalui proses pengecekan `checksum`.
+   
+
+2. Apakah implementasi saat ini sudah memenuhi definisi Continuous Integration (CI) dan Continuous Deployment (CD)?
+   - Menurut saya, implementasi saat ini sudah memenuhi kriteria CI/CD, hal ini dikarenakan setiap kali ada perubahan kode yang dikirim (push) ke repositori, GitHub Actions secara otomatis menjalankan rangkaian unit test dan analisis kualitas kode (CI) untuk memastikan tidak ada fitur yang rusak, selain itu, proses code delivery ke Platform as a Service (PaaS) seperti Koyeb juga sudah otomatis terpicu begitu kode digabungkan ke branch main, sehingga aplikasi versi terbaru dapat langsung diakses oleh pengguna tanpa intervensi manual (CD).
