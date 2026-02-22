@@ -89,7 +89,7 @@ tasks.withType<Test>().configureEach {
 sonar {
     properties {
         property("sonar.projectKey", "B-Nisrina-Alya-Nabilah-2406425924_Module1-CodingStandards")
-        property("sonar.organization", "B-Nisrina Alya Nabilah-2406425924")
+        property("sonar.organization", "b-nisrina-alya-nabilah-2406425924")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.gradle.skipCompile", "true")
     }
