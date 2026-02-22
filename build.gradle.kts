@@ -6,7 +6,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.sonarqube") version "4.4.1.3373"
+    id("org.sonarqube") version "5.1.0.4882"
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -20,7 +20,7 @@ val junitJupiterVersion = "5.9.1"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -91,5 +91,6 @@ sonar {
         property("sonar.projectKey", "B-Nisrina-Alya-Nabilah-2406425924_Module1-CodingStandards")
         property("sonar.organization", "B-Nisrina Alya Nabilah-2406425924")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.gradle.skipCompile", "true")
     }
 }
