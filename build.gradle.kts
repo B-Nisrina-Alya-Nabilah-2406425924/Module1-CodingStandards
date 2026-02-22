@@ -94,3 +94,4 @@ sonar {
         property("sonar.gradle.skipCompile", "true")
     }
 }
+
