@@ -62,7 +62,7 @@ public class CarControllerTest {
 
         mockMvc.perform(get("/car/listCar"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("carList"))
+                .andExpect(view().name("listCar"))
                 .andExpect(model().attribute("cars", allCars));
     }
 
