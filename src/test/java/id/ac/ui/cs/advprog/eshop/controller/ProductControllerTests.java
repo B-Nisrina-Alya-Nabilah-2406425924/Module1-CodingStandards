@@ -116,4 +116,19 @@ public class ProductControllerTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("../list"));
     }
+
+    @Test
+    void testCreateProductPostWithExistingId() throws Exception {
+        Product productWithId = new Product();
+        productWithId.setProductId("existing-id");
+        productWithId.setProductName("Laptop");
+        productWithId.setProductQuantity(10);
+
+        mockMvc.perform(post("/product/create")
+                        .param("productId", "existing-id")
+                        .param("productName", "Laptop")
+                        .param("productQuantity", "10"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("list"));
+    }
 }
