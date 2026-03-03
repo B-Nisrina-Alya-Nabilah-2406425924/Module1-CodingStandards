@@ -34,6 +34,10 @@ repositories {
     mavenCentral()
 }
 
+jacoco {
+    toolVersion = "0.8.10"
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -86,12 +90,28 @@ tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
 sonar {
     properties {
         property("sonar.projectKey", "B-Nisrina-Alya-Nabilah-2406425924_Module1-CodingStandards")
         property("sonar.organization", "b-nisrina-alya-nabilah-2406425924")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.gradle.skipCompile", "true")
+        property(
+            "sonar.coverage.jacoco.xmlReportPaths",
+            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        )
     }
 }
 
+tasks.named("sonar") {
+    dependsOn(tasks.test)
+    dependsOn(tasks.jacocoTestReport)
+}
