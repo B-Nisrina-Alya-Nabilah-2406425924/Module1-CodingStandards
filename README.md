@@ -62,3 +62,41 @@ Jika saya membuat kelas baru `CreateProductFunctionalTest.java` dengan prosedur 
    - Menurut saya, implementasi saat ini sudah memenuhi kriteria CI/CD, hal ini dikarenakan setiap kali ada perubahan kode yang dikirim (push) ke repositori, GitHub Actions secara otomatis menjalankan rangkaian unit test dan analisis kualitas kode (CI) untuk memastikan tidak ada fitur yang rusak, selain itu, proses code delivery ke Platform as a Service (PaaS) seperti Koyeb juga sudah otomatis terpicu begitu kode digabungkan ke branch main, sehingga aplikasi versi terbaru dapat langsung diakses oleh pengguna tanpa intervensi manual (CD).
 
 ---
+
+# TUTORIAL MODUL 3 - Maintainability & OO Principles
+
+---
+
+## Refleksi Tutorial 3
+
+1. Prinsip SOLID yang Saya Terapkan
+   - Single Responsibility Principle (SRP)
+         - Saya memisahkan `CarController` dari file `ProductController.java` dan memindahkannya ke file baru. Sebelumnya, satu file menangani dua hal sekaligus: `Product` dan `Car`. Dengan dipisah, jika di kemudian ahri ada error di bagian `Car`, developer hanya perlu check satu file tersebut tanpa takut merusak fitur `Product`. Sehingga, dapat dipastikan satu kelas memiliki satu responsibility
+   
+    - Open-Closed Principle (OCP)
+      - Saya memastikan `ProductController` dan `CarController` memanggil service lewat interface, bukan langsung ke kelas implementasinya, supaya code "closed" dari perubahan tapi "opened" untuk penambahan fitur baru. Contohnya, kalau di kemudian hari cara menyimpan datanya ganti dari pakai ArrayList ke database SQL, developer hanya perlu membuat class implementasi baru tanpa perlu mengubah code di Controller-nya sama sekali.
+
+    - Liskov Substitution Principle (LSP)
+      - Saya menghapus hubungan extends antara `CarController` dan `ProductController`. Karena, dulu `CarController` dipaksa jadi "anak" dari `ProductController`, padahal mereka punya urusan yang beda. Dampaknya, endpoint product jadi ikut terbawa ke car, padahal tidak relevan. Sekarang mereka independent supaya fungsionalitasnya tidak rusak atau janggal ketika dipanggil
+
+    - Interface Segregation Principle (ISP)
+      - Saya tetap memisahkan `CarService` dan `ProductService`, tapi kali ini saya standarisasi nama method-method-nya, supaya interface-nya tidak over dan tidak memaksa satu kelas buat pakai method yang tidak diperlukan. Dengan nama yang seragam (misal: findAll, update), pengerjaan jadi lebih rapi dan tidak perlu banyak mengingat nama berbeda ketika ingin diimplementasikan.
+
+    - Dependency Inversion Principle (DIP)
+      - Saya mengubah `@Autowired` di CarController supaya mengarah ke interface `CarService`, bukan ke class `CarServiceImpl`, supaya modul yang lebih tinggi tidak bergantung langsung dengan modul yang lebih rendah. Keduanya harus bergantung sama abstraksi (interface). Hasilnya, kode jadi lebih fleksibel dan tidak kaku ketika ada perubahan di level service.
+
+2. Keuntungan Pakai SOLID
+   - Maintainability: Karena kodenya rapi dan tugasnya dipisah-pisah (SRP), nyari bug bisa menjadi lebih mudah, karena kita tahu persis bagian mana yang harus diperbaiki.
+    - Lebih Fleksibel (Scalability): Kalau ingin menambahkan fitur baru, tidak perlu merombak total kode yang sudah ada, bisa hanya dengan menambah kelas baru sesuai interface yang ada (OCP).
+   - Testability: Karena kita pakai interface (DIP), kita bisa bikin Mock pas lagi testing. Jadi, ketika nge-test satu fungsi tidak harus menunggu database atau sistem lain siap dulu.
+   - Readable: Penamaan yang konsisten membuat tim atau teman sekelompok project (atau kita sendiri ketika buka project ini lagi di masa depan) tidak pusing membaca alur kodenya.
+
+3. Kerugian Kalau Nggak Pakai SOLID
+   - Kalau semua fungsi ditumpuk jadi satu (melanggar SRP), fixing error di satu tempat bisa berdampak ke fitur lain yang sebenarnya tidak relevant.
+   - Kalau kita bergantung langsung sama kelas concrete (melanggar DIP), sekali ada perubahan kecil di service, kita harus ganti kode di banyak tempat sekaligus, yang membuat developer harus mengeluarkan tenaga extra dan dengan resiko rawan salah
+   - Bawa "Sampah" Kode: Kalau asal pakai extends (melanggar LSP), kelas kita bisa punya fitur atau endpoint yang sebenarnya tidak berguna. Ini yang membuat aplikasi jadi berat dan tidak aman.
+   - Testing jadi susah: Tanpa SOLID, fungsi biasanya jadi terlalu besar dan saling berelasi satu sama lain, sehingga ketika mau ngetest satu fitur kecil, kita harus nyiapin banyak hal yang sebenernya nggak perlu, yang membuat proses testing memakan lebih banyak waktu.
+
+modul 3 done :p
+
+---
